@@ -1,37 +1,37 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# RetinaScan Diagnostic AI — Multimodal Ophthalmology Screening
 
-# Run and deploy your AI Studio app
+[![AWS SageMaker](https://img.shields.io/badge/AWS-SageMaker%20%7C%20S3-FF9900?logo=amazon-aws&logoColor=white)](#aws-cloud-architecture)
+[![Client](https://img.shields.io/badge/Client-Flutter%20Mobile%20%7C%20Vite%20Web-0052CC)](#client-architecture)
+[![Branch Status](https://img.shields.io/badge/Preservation-Ex%20Branch-22C55E)](#branch-architecture)
+[![License: MIT](https://img.shields.io/badge/License-MIT-gray.svg)](LICENSE)
 
-This contains everything you need to run your app locally.
+> Deep learning retinal fundus examination and diagnostic decision support for diabetic retinopathy and macular edema screening.
 
-View your app in AI Studio: https://ai.studio/apps/4a159cf5-bbcd-47c0-9890-e39e13091a80
+---
 
-## Run Locally
+## 1. Executive Brief
+Preventable vision loss can be reduced significantly with early retinal screening. **RetinaScan Diagnostic AI** accepts fundus photography via mobile Flutter clients and web terminals, applying convolutional feature extractors and Gemini/Bedrock multimodal reasoning to detect microaneurysms and exudates.
 
-**Prerequisites:**  Node.js
+* **Preservation**: Original GDG prototype preserved on [`Ex`](https://github.com/prak05/RetinaScan-Diagnostic-AI/tree/Ex).
+* **Modernized Pipeline**: Serverless image processing pipeline backed by AWS SageMaker inference and TruLens quality evaluations.
 
+---
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 2. AWS Cloud Architecture
 
-## Portfolio brief
+```mermaid
+flowchart TD
+    Fundus["Fundus Camera / Mobile"] --> APIGW["Amazon API Gateway"]
+    APIGW --> S3Raw["Amazon S3 (Fundus Scan Vault)"]
+    S3Raw --> LambdaCrop["AWS Lambda (Macula & Disc Preprocessing)"]
+    LambdaCrop --> SageMaker["Amazon SageMaker (PyTorch Deep ResNet)"]
+    SageMaker --> BedrockMulti["Amazon Bedrock (Multimodal Diagnostic Report)"]
+    BedrockMulti --> Dynamo["Amazon DynamoDB (Screening Records)"]
+    Dynamo --> Clinician["Ophthalmologist Review Portal"]
+```
 
-A retinal-scan application concept for presenting image-based screening workflows and results in a clear, human-reviewable interface.
+---
 
-### Visual system
-
-Apple-inspired clinical imaging: dark optic surfaces, crisp image framing, high legibility, and restrained diagnostic highlights.
-
-### Architecture
-
-The clean showcase excludes the bundled SDK and local environment files. Keep image processing, model inference, result presentation, and consent/retention boundaries distinct.
-
-### Run and output
-
-Follow the platform-specific application instructions. Use synthetic or consented images for development; this project is not a medical diagnosis.
-
+## 3. Branch Architecture
+* [`main`](https://github.com/prak05/RetinaScan-Diagnostic-AI/tree/main): Production multimodal inference service with TruLens verification.
+* [`Ex`](https://github.com/prak05/RetinaScan-Diagnostic-AI/tree/Ex): Preserved initial GDG prototype.
