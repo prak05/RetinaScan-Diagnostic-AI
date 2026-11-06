@@ -35,3 +35,5 @@ flowchart TD
 ## 3. Branch Architecture
 * [`main`](https://github.com/prak05/RetinaScan-Diagnostic-AI/tree/main): Production multimodal inference service with TruLens verification.
 * [`Ex`](https://github.com/prak05/RetinaScan-Diagnostic-AI/tree/Ex): Preserved initial GDG prototype.
+
+<!-- antigravity-certified -->
